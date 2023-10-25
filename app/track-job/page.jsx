@@ -6,24 +6,38 @@ import { useRouter } from "next/navigation";
 
 import Form from "@components/Form";
 
-const CreatePrompt = () => {
+const TrackJob = () => {
   const router = useRouter();
   const { data: session } = useSession();
 
   const [submitting, setIsSubmitting] = useState(false);
-  const [post, setPost] = useState({ prompt: "", tag: "" });
 
-  const createPrompt = async (e) => {
+  const [post, setPost] = useState({
+    companyName: "",
+    jobId: "",
+    position: "",
+    dateApplied: new Date(),
+    city: "",
+    state: "",
+    country: "",
+  });
+
+  const TrackJob = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("/api/prompt/new", {
+      const response = await fetch("/api/job/new", {
         method: "POST",
         body: JSON.stringify({
-          prompt: post.prompt,
+          companyName: post.companyName,
           userId: session?.user.id,
-          tag: post.tag,
+          jobId: post.jobId,
+          position: post.position,
+          dateApplied: post.dateApplied,
+          city: post.city,
+          state: post.state,
+          country: post.country,
         }),
       });
 
@@ -39,13 +53,13 @@ const CreatePrompt = () => {
 
   return (
     <Form
-      type='Create'
+      type="Create"
       post={post}
       setPost={setPost}
       submitting={submitting}
-      handleSubmit={createPrompt}
+      handleSubmit={TrackJob}
     />
   );
 };
 
-export default CreatePrompt;
+export default TrackJob;

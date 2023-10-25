@@ -10,7 +10,17 @@ const UpdatePrompt = () => {
   const searchParams = useSearchParams();
   const promptId = searchParams.get("id");
 
-  const [post, setPost] = useState({ prompt: "", tag: "", });
+  const formattedDate = new Date();
+
+  const [post, setPost] = useState({
+    companyName: "",
+    jobId: "",
+    position: "",
+    dateApplied: formattedDate.toISOString().slice(0, 10),
+    city: "",
+    state: "",
+    country: "",
+  });
   const [submitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -54,7 +64,7 @@ const UpdatePrompt = () => {
 
   return (
     <Form
-      type='Edit'
+      type="Edit"
       post={post}
       setPost={setPost}
       submitting={submitting}
